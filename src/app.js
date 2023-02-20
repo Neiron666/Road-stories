@@ -24,7 +24,7 @@ const pictures = [
   },
 ];
 
-let counter = setCounter(pictures, 0);
+let counter = setCounter(pictures);
 
 // ********* הדלקת פונקציה **********
 renderSlider(pictures);
