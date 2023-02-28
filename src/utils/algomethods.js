@@ -16,3 +16,13 @@ export const makeEveryFirstLetterCapital = (text) => {
 };
 
 // *****************************
+
+// const random = Math.random() * 10;
+// const round = Math.round(random);
+// console.log(random);
+// console.log(round);
+
+// *************** מספר בין מנימום למקסימום***************
+export const randomNumBetween = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
