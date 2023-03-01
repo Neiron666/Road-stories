@@ -4,6 +4,7 @@ import renderSlider from "./pictures/components/renderSlider.js";
 import { SLIDER_NEXT_BTN, SLIDER_PREV_BTN } from "./services/domService.js";
 import onChangeSliderPic from "./pictures/helpers/onChangeSLiderPic.js";
 import Picture from "./models/Picture.js";
+import "./users/models/User.js";
 
 // ********* יצירת מערך תמונות  **********
 

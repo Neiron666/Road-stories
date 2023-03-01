@@ -1,7 +1,5 @@
-// Story שם
-
 import { randomNumBetween } from "../utils/algomethods.js";
-
+// Story שם
 // אצלי זה סיפור מסויים לקניה
 class Picture {
   // הופחים לפרטי  # כדי שעף אחד לא יוכל לשנות
@@ -62,22 +60,23 @@ class Picture {
   }
 }
 
-try {
-  const pic = new Picture({
-    url: "ff",
-    alt: "dd",
-    credits: "dd",
-    price: 1000,
-    user_id: "123fghgh",
-    category: "123fghgh",
-  });
-  console.log(pic);
-} catch (error) {
-  error.status = 400;
-  console.log(error.message);
-  if (error.status >= 400) console.log("error bla bla");
-}
+// try {
+//   const pic = new Picture({
+//     url: "ff",
+//     alt: "dd",
+//     credits: "dd",
+//     price: 1000,
+//     user_id: "123fghgh",
+//     category: "123fghgh",
+//   });
+//   console.log(pic);
+// } catch (error) {
+//   error.status = 400;
+//   console.log(error.message);
+//   if (error.status >= 400) console.log("error bla bla");
+// }
 export default Picture;
+
 // יוצרים מופע חדש מהקלאס ומעבירים לו את האובייקט עם מפתחות ו ערכים
 
 // const user = { _id: "dfgfdgg1231431", isBusiness: true, isAdmin: false };

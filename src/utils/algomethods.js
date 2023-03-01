@@ -23,6 +23,7 @@ export const makeEveryFirstLetterCapital = (text) => {
 // console.log(round);
 
 // *************** מספר בין מנימום למקסימום***************
+// Math.random() = random number from 0-1
 export const randomNumBetween = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
