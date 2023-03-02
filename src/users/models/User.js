@@ -21,6 +21,7 @@ class User {
     this.#name = name;
     this.#phone = phone;
     this.#id = this.generateId(users);
+    this.#email = email;
   }
   // ****************פונקציה מחזירה מספר דפולטיבי בין מיליון ל 10 מליון*******
   generateId(arreyOfUsers) {
@@ -32,33 +33,104 @@ class User {
     this.generateId(arreyOfUsers);
   }
   setName(user_name) {
-    const { first, last } = user_name;
-
+    const arrayOfValues = Object.values(user_name).join(" ");
     // for(let key in user_name){
     //   Object[key].charAt(0)=Object[key].charAt(0).toUpperCase();
     // }
-    return user_name;
+    return makeEveryFirstLetterCapital(arrayOfValues);
+  }
+  checkPhone(phoneNumber) {
+    const regex = /^[\d]{9}\d$/g;
+    if (!phoneNumber) {
+      throw new Error("Enter a phone number!");
+    }
+    if (!regex.test(phoneNumber)) {
+      throw new Error("Enter correct phone number of 10 digits only!");
+    }
+    return phoneNumber.slice(0, 3) + "-" + phoneNumber.slice(3);
+  }
+
+  // ************email checking***************
+
+  checkEmail(email, arrayOfemails) {
+    const regex = /^[\w]+@[\w]+((\.co\.il)|(\.com))$/g;
+    if (!regex.test(email)) {
+      throw new Error("Please, enter a valid email!");
+    }
+    const user_email = arrayOfemails.findIndex(
+      (user) => user.email === this.#email
+    );
+    if (user_email === -1) return email;
+    throw new Error("Please, choose another email!");
+  }
+  get name() {
+    return this.#name;
+  }
+  get phone() {
+    return this.#phone;
+  }
+  get email() {
+    return this.#email;
   }
 }
 
-const test = {
-  address: {
-    state: "usa",
-    country: "new-yourk",
-    city: "new-yourk",
-    street: "broadwey",
-    houseNumber: 5,
-    zip: 123456,
-  },
-  email: "bigo@gmail.com",
-  phone: "050-0000000",
-  name: {
-    first: "Valik",
-    last: "Oliynyk",
-  },
-};
-const user = new User(test);
-console.log(user);
+// ******try and catch**********
+
+try {
+  const email = "email";
+  const arrayOfemails = [
+    {
+      email: "bigo@gmail.com",
+    },
+    {
+      email: "bio@gmail.com",
+    },
+  ];
+  // console.log(arrayOfemails[0].email);
+  const user = new User({
+    address: {
+      state: "usa",
+      country: "new-yourk",
+      city: "new-yourk",
+      street: "broadwey",
+      houseNumber: 5,
+      zip: 123456,
+    },
+    email: "bigo@gmail.com",
+    phone: "0500000000",
+    name: {
+      first: "valik",
+      last: "oliynyk",
+    },
+  });
+  console.log(user);
+  console.log(user.checkEmail(user.email, arrayOfemails));
+  // console.log(user.email);
+  // console.log(user.name);
+  // console.log(user.setName(user.name));
+  // console.log(user.checkPhone(user.phone));
+} catch (error) {
+  console.log(error.message);
+}
+
+// *********test**************
+
+// const test = {
+//   address: {
+//     state: "usa",
+//     country: "new-yourk",
+//     city: "new-yourk",
+//     street: "broadwey",
+//     houseNumber: 5,
+//     zip: 123456,
+//   },
+//   email: "bigo@gmail.com",
+//   phone: "0500000000",
+//   name: {
+//     first: "valik",
+//     last: "oliynyk",
+//   },
+// };
 
 // const test2=makeEveryFirstLetterCapital("  sdfdsf sdfsdSSDFFfds fsdfsdf sdfsdf")
 // console.log(test2);
