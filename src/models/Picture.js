@@ -1,4 +1,4 @@
-import { randomNumBetween } from "../utils/algomethods.js";
+import { generateUniqId } from "../utils/algomethods.js";
 // Story שם
 // אצלי זה סיפור מסויים לקניה
 class Picture {
@@ -21,7 +21,7 @@ class Picture {
     if (!url || !alt || !credits || !price || !user_id) {
       throw new Error("IN ERROR");
     }
-    this.#id = this.generateId(pictues);
+    this.#id = generateUniqId(pictues, 1_000_000, 9_999_999);
     this.url = url;
     this.alt = alt;
     this.credits = credits;
@@ -30,14 +30,7 @@ class Picture {
     this.#user_id = user_id;
     this.#createdAt = new Date();
   }
-  generateId(arrayOfPictures) {
-    if (arrayOfPictures.length >= 8_999_999)
-      throw new Error("max pics in array!");
-    const randomNumber = randomNumBetween(1_000_000, 9_999_999);
-    const pic = arrayOfPictures.findIndex((pic) => pic._id === randomNumber);
-    if (pic === -1) return randomNumber;
-    this.generateId(arrayOfPictures);
-  }
+
   //   edit(){}
   //_id נותנים שם חדש
   // מתודה כדי לגשת ל מפתח get

@@ -1,5 +1,5 @@
-import PAGES from "./models/pageModel.js";
-import { onChangePage } from "./routes/router.js";
+import PAGES from "./pageModel.js";
+import { onChangePage } from "./router.js";
 import {
   HOME_PAGE_LINK,
   IL_PAGE_LINK,
@@ -7,7 +7,7 @@ import {
   USA_PAGE_LINK,
   SIGNUP_PAGE_LINK,
   LOGIN_PAGE_LINK,
-} from "./services/domService.js";
+} from "../services/domService.js";
 
 // ********* האזנה לאירועים **********
 

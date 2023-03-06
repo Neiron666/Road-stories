@@ -1,5 +1,6 @@
-import { randomNumBetween } from "../../utils/algomethods.js";
+import { generateUniqId } from "../../utils/algomethods.js";
 import { makeEveryFirstLetterCapital } from "../../utils/algomethods.js";
+import { PASSWORD_REGEX } from "../../utils/regex.js";
 
 class User {
   #id;
@@ -9,59 +10,69 @@ class User {
   #email;
   #password;
   #createdAt;
-  #isAdmin = false;
-  #isBusiness = false;
+  #isAdmin;
+  #isBusiness;
 
   constructor(user, users = []) {
-    const { id, name, address, phone, password, email } = user;
-    const { state, country, city, street, houseNumber, zip } = address;
+    const { name, address, phone, password, email, isAdmin, isBusiness } = user;
     // this.#address=address; //אפשר לעשות קיצור לאדרס
-    this.#address = { state, country, city, street, houseNumber, zip };
-    const { first, last } = name;
-    this.#name = name;
-    this.#phone = phone;
-    this.#id = this.generateId(users);
-    this.#email = email;
+    this.#address = this.checkAddress(address);
+    this.#name = this.setName(name);
+    this.#phone = this.checkPhone(phone);
+    this.#id = generateUniqId(users, 1_000_000, 9_999_999);
+    this.#email = this.checkEmail(email, users);
+    this.#password = password;
+    this.#createdAt = new Date();
+    this.#password = this.checkPassword(password);
+    this.#isAdmin = isAdmin || false;
+    this.#isBusiness = isBusiness || false;
   }
   // ****************פונקציה מחזירה מספר דפולטיבי בין מיליון ל 10 מליון*******
-  generateId(arreyOfUsers) {
-    if (arreyOfUsers.length >= 8_999_999)
-      throw new Error("max users in array!");
-    const randomNumber = randomNumBetween(1_000_000, 9_999_999);
-    const user = arreyOfUsers.findIndex((user) => user._id === randomNumber);
-    if (user === -1) return randomNumber;
-    this.generateId(arreyOfUsers);
-  }
+  // generateId(arreyOfUsers) {
+  //   if (arreyOfUsers.length >= 8_999_999)
+  //     throw new Error("max users in array!");
+  //   const randomNumber = randomNumBetween(1_000_000, 9_999_999);
+  //   const user = arreyOfUsers.findIndex((user) => user._id === randomNumber);
+  //   if (user === -1) return randomNumber;
+  //   this.generateId(arreyOfUsers);
+  // }
+
+  // ***************הופכים אות ראשונה לגדולה**********
   setName(user_name) {
     const arrayOfValues = Object.values(user_name).join(" ");
-    // for(let key in user_name){
-    //   Object[key].charAt(0)=Object[key].charAt(0).toUpperCase();
-    // }
     return makeEveryFirstLetterCapital(arrayOfValues);
   }
-  checkPhone(phoneNumber) {
-    const regex = /^[\d]{9}\d$/g;
-    if (!phoneNumber) {
-      throw new Error("Enter a phone number!");
-    }
-    if (!regex.test(phoneNumber)) {
-      throw new Error("Enter correct phone number of 10 digits only!");
-    }
-    return phoneNumber.slice(0, 3) + "-" + phoneNumber.slice(3);
+  // *****************אפשר גם ככה***********
+
+  //    setName({ first, last }) {
+  //   if(typeof first!==String||last!==String || first.langth<2 || last.lenght<2) throw new Error("Please enter a valid name")
+  //     return {
+  //       first: makeEveryFirstLetterCapital(first),
+  //       last: makeEveryFirstLetterCapital(last),
+  //     };
+  //   }
+  // }
+
+  //******בדיקה של מספר טלפון******* */
+  checkPhone(phone) {
+    const regex = /^0[0-9]{1,2}(-?|\s?)[0-9]{3}(-?|\s?)[0-9]{4}/g;
+    const isExist = phone.match(regex);
+    if (!isExist) throw new Error("Please enter a valid phone number!");
+    return phone;
   }
 
   // ************email checking***************
 
-  checkEmail(email, arrayOfemails) {
+  checkEmail(email, users) {
+    email.trim();
     const regex = /^[\w]+@[\w]+((\.co\.il)|(\.com))$/g;
+    // const isAxist = regex.test(email);
     if (!regex.test(email)) {
       throw new Error("Please, enter a valid email!");
     }
-    const user_email = arrayOfemails.findIndex(
-      (user) => user.email === this.#email
-    );
-    if (user_email === -1) return email;
-    throw new Error("Please, choose another email!");
+    const user = users.findIndex((user) => user.email === email);
+    if (user !== -1) throw new Error("Please, choose another email!");
+    return email;
   }
   get name() {
     return this.#name;
@@ -72,43 +83,182 @@ class User {
   get email() {
     return this.#email;
   }
+  get address() {
+    return this.#address;
+  }
+  get password() {
+    return this.#password;
+  }
+  get password() {
+    return this.#password;
+  }
+
+  get _id() {
+    return this.#id;
+  }
+  get createAt() {
+    return this.#createdAt;
+  }
+  get isAdmin() {
+    return this.#isAdmin;
+  }
+
+  // ************ check password************
+  checkPassword(password) {
+    const regex = PASSWORD_REGEX;
+    const isExist = regex.test(password);
+    if (!isExist)
+      throw new Error(
+        "The password must contain at least one uppercase letter in English. One lowercase letter in English. Four numbers and one of the following special characters !@#$%^&*-"
+      );
+    return password;
+  }
+  changeBizStatus(user) {
+    if (user._id !== this.#id && !user.isAdmin)
+      throw new Error("User must be registered user or Admin");
+    this.#isBusiness = !this.#isBusiness;
+  }
+  checkAddress(address) {
+    const { state, country, city, street, houseNumber, zip } = address;
+    if (
+      country.length < 2 ||
+      city.length < 2 ||
+      street.length < 2 ||
+      typeof houseNumber !== "number" ||
+      houseNumber <= 0 ||
+      typeof zip !== "number" ||
+      zip <= 0
+    )
+      throw new Error("Please enter a valid address!");
+
+    return { state: state || "", country, city, street, houseNumber, zip };
+  }
+  // update(user, users) {
+  //   if (typeof user !== "object") throw new Error("Please enter a valid user");
+  //   if (user._id !== this.#id)
+  //     throw new Error("Only register user can edit his info");
+  //   const { id, name, address, phone, email, isBusiness } = user;
+  //   const { state, country, city, street, houseNumber, zip } = address;
+  //   this.#name = this.setName(name);
+  //   this.#address = { state, country, city, street, houseNumber, zip };
+  //   this.#phone = this.checkPhone(phone);
+  //   this.#email =
+  //     email === this.#email ? this.#email : this.checkEmail(email, users);
+  //   this.#isBusiness = isBusiness ? isBusiness : this.#isBusiness;
+  //   return this;
+  // }
+  changePassword() {}
+
+  // static - מעביר את המטודה למחלקה
+  static findOneAndUpdate(user, users) {
+    if (typeof user !== "object") throw new Error("Please enter a valid user!");
+    if (Array.isArray(users) !== true || !users.length)
+      throw new Error("Please enter array of users");
+
+    const userInArray = users.find((item) => item._id === user._id);
+    if (!userInArray) throw new Error("this user in not in the database!");
+
+    const { address, phone, name, email, isBusiness } = user;
+    userInArray.#name = userInArray.setName(name);
+    userInArray.#address = userInArray.checkAddress(address);
+    userInArray.#phone = userInArray.checkPhone(phone);
+    userInArray.#email =
+      email === userInArray.#email
+        ? userInArray.#email
+        : userInArray.checkUniqEmail(email, users);
+    userInArray.#isBusiness = isBusiness ? isBusiness : userInArray.#isBusiness;
+
+    return users;
+  }
 }
 
 // ******try and catch**********
 
+// try {
+//   const arrayOfemails = [
+//     {
+//       email: "bigo@gmail.com",
+//     },
+//     {
+//       email: "bio@gmail.com",
+//     },
+//   ];
+//   const test = {
+//     password: "Aa1234!",
+//     address: {
+//       state: "usa",
+//       country: "new-yourk",
+//       city: "new-yourk",
+//       street: "broadwey",
+//       houseNumber: 5,
+//       zip: 123456,
+//     },
+//     email: "bigo@gmail.com",
+//     phone: "0500000000",
+//     name: {
+//       first: "valik",
+//       last: "oliynyk",
+//     },
+//   };
+// const user = new User(test);
+
+// user.changeBizStatus(user);
+// user.changeBizStatus({ _id: user, isAdmin: true });
+// console.log(user);
+// console.log(user.checkEmail(user.email, arrayOfemails));
+// console.log(user.email);
+// console.log(user.name);
+// console.log(user.setName(user.name));
+// console.log(user.checkPhone(user.phone));
+// } catch (error) {
+//   console.log(error.message);
+// }
+
+// ******try and catch for update method**********
+const test = {
+  password: "Aa1234!",
+  address: {
+    state: "usa",
+    country: "new-yourk",
+    city: "new-yourk",
+    street: "broadwey",
+    houseNumber: 5,
+    zip: 123456,
+  },
+  email: "bigo@gmail.com",
+  phone: "0500000000",
+  name: {
+    first: "valik",
+    last: "oliynyk",
+  },
+};
 try {
-  const email = "email";
-  const arrayOfemails = [
-    {
-      email: "bigo@gmail.com",
-    },
-    {
-      email: "bio@gmail.com",
-    },
-  ];
-  // console.log(arrayOfemails[0].email);
-  const user = new User({
-    address: {
-      state: "usa",
-      country: "new-yourk",
-      city: "new-yourk",
-      street: "broadwey",
-      houseNumber: 5,
-      zip: 123456,
-    },
-    email: "bigo@gmail.com",
-    phone: "0500000000",
-    name: {
-      first: "valik",
-      last: "oliynyk",
-    },
-  });
+  const user = new User(test);
+  const array = [user];
+  user.changeBizStatus(user);
+
+  // user.update(
+  //   {
+  //     _id: user._id,
+  //     password: "Aa1234!",
+  //     name: {
+  //       first: "shula",
+  //       last: "zaken",
+  //     },
+  //     address: {
+  //       state: "",
+  //       country: "israel",
+  //       city: "tel-aviv",
+  //       street: "shoham",
+  //       houseNumber: 5,
+  //       zip: 123456,
+  //     },
+  //     email: "willi@gmail.com",
+  //     phone: "0500000000",
+  //   },
+  //   arrayOfUsers
+  // );
   console.log(user);
-  console.log(user.checkEmail(user.email, arrayOfemails));
-  // console.log(user.email);
-  // console.log(user.name);
-  // console.log(user.setName(user.name));
-  // console.log(user.checkPhone(user.phone));
 } catch (error) {
   console.log(error.message);
 }
@@ -157,7 +307,5 @@ try {
 // const user = new User();
 // user.id = "blblb";
 // console.log(user);
-
-// export default User;
 
 export default User;

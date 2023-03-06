@@ -1,10 +1,13 @@
-import "./links.js";
+import "./routes/links.js";
 import setCounter from "./pictures/helpers/setCounter.js";
 import renderSlider from "./pictures/components/renderSlider.js";
 import { SLIDER_NEXT_BTN, SLIDER_PREV_BTN } from "./services/domService.js";
 import onChangeSliderPic from "./pictures/helpers/onChangeSLiderPic.js";
 import Picture from "./models/Picture.js";
 import "./users/models/User.js";
+import initialData from "./initial-data/initialData.js";
+
+window.pictures = initialData().pictures;
 
 // ********* יצירת מערך תמונות  **********
 
@@ -26,17 +29,5 @@ const pictures = [
   },
 ];
 
-let counter = setCounter(pictures);
-
-// ********* הדלקת פונקציה **********
-renderSlider(pictures);
-
-// ********* האזנה לאירועים **********
-SLIDER_NEXT_BTN.addEventListener(
-  "click",
-  () => (counter = onChangeSliderPic(pictures, counter, "next"))
-);
-SLIDER_PREV_BTN.addEventListener(
-  "click",
-  () => (counter = onChangeSliderPic(pictures, counter, "prev"))
-);
+// // ********* הדלקת פונקציה **********
+renderSlider(pictures, 0);
