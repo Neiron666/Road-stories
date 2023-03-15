@@ -89,9 +89,6 @@ class User {
   get password() {
     return this.#password;
   }
-  get password() {
-    return this.#password;
-  }
 
   get _id() {
     return this.#id;
@@ -171,6 +168,7 @@ class User {
     return users;
   }
 }
+export default User;
 
 // ******try and catch**********
 
@@ -215,53 +213,53 @@ class User {
 // }
 
 // ******try and catch for update method**********
-const test = {
-  password: "Aa1234!",
-  address: {
-    state: "usa",
-    country: "new-yourk",
-    city: "new-yourk",
-    street: "broadwey",
-    houseNumber: 5,
-    zip: 123456,
-  },
-  email: "bigo@gmail.com",
-  phone: "0500000000",
-  name: {
-    first: "valik",
-    last: "oliynyk",
-  },
-};
-try {
-  const user = new User(test);
-  const array = [user];
-  user.changeBizStatus(user);
+// const test = {
+//   password: "Aa1234!",
+//   address: {
+//     state: "usa",
+//     country: "new-yourk",
+//     city: "new-yourk",
+//     street: "broadwey",
+//     houseNumber: 5,
+//     zip: 123456,
+//   },
+//   email: "bigo@gmail.com",
+//   phone: "0500000000",
+//   name: {
+//     first: "valik",
+//     last: "oliynyk",
+//   },
+// };
+// try {
+//   const user = new User(test);
+//   const array = [user];
+//   user.changeBizStatus(user);
 
-  // user.update(
-  //   {
-  //     _id: user._id,
-  //     password: "Aa1234!",
-  //     name: {
-  //       first: "shula",
-  //       last: "zaken",
-  //     },
-  //     address: {
-  //       state: "",
-  //       country: "israel",
-  //       city: "tel-aviv",
-  //       street: "shoham",
-  //       houseNumber: 5,
-  //       zip: 123456,
-  //     },
-  //     email: "willi@gmail.com",
-  //     phone: "0500000000",
-  //   },
-  //   arrayOfUsers
-  // );
-  console.log(user);
-} catch (error) {
-  console.log(error.message);
-}
+// user.update(
+//   {
+//     _id: user._id,
+//     password: "Aa1234!",
+//     name: {
+//       first: "shula",
+//       last: "zaken",
+//     },
+//     address: {
+//       state: "",
+//       country: "israel",
+//       city: "tel-aviv",
+//       street: "shoham",
+//       houseNumber: 5,
+//       zip: 123456,
+//     },
+//     email: "willi@gmail.com",
+//     phone: "0500000000",
+//   },
+//   arrayOfUsers
+// );
+//   console.log(user);
+// } catch (error) {
+//   console.log(error.message);
+// }
 
 // *********test**************
 
@@ -307,5 +305,3 @@ try {
 // const user = new User();
 // user.id = "blblb";
 // console.log(user);
-
-export default User;

@@ -7,9 +7,11 @@ import {
   SIGNUP_PAGE,
   LOGIN_PAGE,
   ERROR404_PAGE,
+  CREATE_PIC_PAGE,
 } from "../services/domService.js";
 
 export const onChangePage = (page) => {
+  CREATE_PIC_PAGE.className = "d-none";
   HOME_PAGE.className = "d-none";
   IL_PAGE.className = "d-none";
   EU_PAGE.className = "d-none";
@@ -23,5 +25,7 @@ export const onChangePage = (page) => {
   if (page === PAGES.USA_PAGE) return (USA_PAGE.className = "d-block");
   if (page === PAGES.SIGNUP_PAGE) return (SIGNUP_PAGE.className = "d-block");
   if (page === PAGES.LOGIN_PAGE) return (LOGIN_PAGE.className = "d-block");
+  if (page === PAGES.CREATE_PIC_PAGE)
+    return (CREATE_PIC_PAGE.className = "d-block");
   return (ERROR404_PAGE.className = "d-block");
 };

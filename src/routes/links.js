@@ -7,6 +7,7 @@ import {
   USA_PAGE_LINK,
   SIGNUP_PAGE_LINK,
   LOGIN_PAGE_LINK,
+  CREATE_PIC_PAGE_LINK,
 } from "../services/domService.js";
 
 // ********* האזנה לאירועים **********
@@ -19,3 +20,6 @@ SIGNUP_PAGE_LINK.addEventListener("click", () =>
   onChangePage(PAGES.SIGNUP_PAGE)
 );
 LOGIN_PAGE_LINK.addEventListener("click", () => onChangePage(PAGES.LOGIN_PAGE));
+CREATE_PIC_PAGE_LINK.addEventListener("click", () =>
+  onChangePage(PAGES.CREATE_PIC_PAGE)
+);

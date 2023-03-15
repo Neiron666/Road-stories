@@ -3,9 +3,10 @@ import setCounter from "./pictures/helpers/setCounter.js";
 import renderSlider from "./pictures/components/renderSlider.js";
 import { SLIDER_NEXT_BTN, SLIDER_PREV_BTN } from "./services/domService.js";
 import onChangeSliderPic from "./pictures/helpers/onChangeSLiderPic.js";
-import Picture from "./models/Picture.js";
+import Picture from "./pictures/models/Picture.js";
 import "./users/models/User.js";
 import initialData from "./initial-data/initialData.js";
+import "./pictures/services/pictureService.js";
 
 window.pictures = initialData().pictures;
 

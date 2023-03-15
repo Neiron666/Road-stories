@@ -17,6 +17,7 @@
 
 <body>
     <header>
+        <!-- nav bar -->
         <nav class="navbar navbar-expand-lg bg-info">
             <div class="container d-flex-md justify-content-between">
                 <span class="navbar-brand cursor">ROADS STORIES</span>
@@ -53,6 +54,12 @@
                                 </span>
 
                             </li>
+                            <li class="nav-item">
+                                <span id="create-pic-link" class="nav-link cursor" aria-current="page">
+                                    Add Pic
+                                </span>
+
+                            </li>
 
                         </ul>
                     </div>
@@ -62,7 +69,7 @@
     </header>
     <main>
         <!-- home page -->
-        <div id="home-page" class="dblock">
+        <div id="home-page" class="d-none">
             <div class="container">
                 <!-- home page titles -->
                 <div class="center mt-4">
@@ -159,21 +166,53 @@
                 </div>
             </div>
         </div>
+
         <!-- signup page -->
-        <div id="signup-page" class="d-none">
+        <div id="signup-page" class="d-block">
             <div class="container">
                 <div class="center mt-4">
                     <div class="col-12 col-md-10 col-xl-8">
-                        <h1 class="display-4">
+                        <h1 class="center display-4">
                             Signup Page
-                            <h2 class="fs-5">
+                            <h2 class="center fs-5">
                                 Signup for free
                             </h2>
                             <hr>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui nam obcaecati atque nesciunt
-                                quis tenetur harum aliquid. Voluptates sequi voluptatem sunt, debitis repudiandae
-                                quibusdam,
-                                quasi doloremque ab amet laboriosam porro!</p>
+                            <div class="center">
+                                <form class="form mt-3 p-2 col-12 col-md-8 col-xl-8 border rounded"
+                                    style="min-width: 280px">
+                                    <h1 class="text-center fs-5">CREATE NEW USER ACCOUNT</h1>
+                                    <div>
+                                        <label for="create-user-name">Your Name</label>
+                                        <input id="create-user-name" type="text" class="form-control mb-2" name="name"
+                                            autocomplete="off" />
+                                        <span id="create-user-name-error" class="text-danger"></span>
+                                    </div>
+                                    <div>
+                                        <label for="create-user-phone">Your Phone</label>
+                                        <input id="create-user-phone" type="text" class="form-control mb-2" name="phone"
+                                            autocomplete="off" />
+                                        <span id="create-user-phone-error" class="text-danger"></span>
+                                    </div>
+                                    <div>
+                                        <label for="create-user-email">Your Email</label>
+                                        <input id="create-user-email" type="text" class="form-control mb-2" name="phone"
+                                            autocomplete="off" />
+                                        <span id="create-user-email-error" class="text-danger"></span>
+                                    </div>
+                                    <div>
+                                        <label for="create-user-email">Your Email</label>
+                                        <input id="create-user-email" type="text" class="form-control mb-2" name="phone"
+                                            autocomplete="off" />
+                                        <span id="create-user-email-error" class="text-danger"></span>
+                                    </div>
+
+                                    <input id="create-pic-cancel-btn" type="button" value="cancel"
+                                        class="btn btn-secondary col-12 mb-2" />
+                                    <input id="create-pic-submit-btn" type="button" value="submit"
+                                        class="btn btn-primary col-12 mb-2" disabled />
+                                </form>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -197,6 +236,46 @@
                 </div>
             </div>
         </div>
+
+        <!-- create pic page -->
+        <div id="create-pic-page" class="d-none">
+            <div class="container">
+                <div class="center" style="height: 87vh">
+                    <form class="form p-2 col-12 col-md-6 col-xl-4 border rounded" style="min-width: 280px">
+                        <h1 class="text-center fs-5">CREATE NEW PICTURE</h1>
+                        <div>
+                            <label for="create-pic-url">Source</label>
+                            <input id="create-pic-url" type="text" class="form-control mb-2" name="url"
+                                autocomplete="off" />
+                            <span id="create-pic-url-error" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label for="create-pic-alt">Description</label>
+                            <input id="create-pic-alt" type="text" class="form-control mb-2" name="alt"
+                                autocomplete="off" />
+                            <span id="create-pic-alt-error" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label for="create-pic-credits">Credits</label>
+                            <input id="create-pic-credits" type="text" class="form-control mb-2" name="credits"
+                                autocomplete="off" />
+                            <span id="create-pic-credits-error" class="text-danger"></span>
+                        </div>
+                        <div>
+                            <label for="create-pic-price">Price</label>
+                            <input id="create-pic-price" type="number" class="form-control mb-2" name="price"
+                                autocomplete="off" />
+                            <span id="create-pic-price-error" class="text-danger"></span>
+                        </div>
+                        <input id="create-pic-cancel-btn" type="button" value="cancel"
+                            class="btn btn-secondary col-12 mb-2" />
+                        <input id="create-pic-submit-btn" type="button" value="submit"
+                            class="btn btn-primary col-12 mb-2" disabled />
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- error 404 page -->
         <div id="error-404-page" class="d-none">
             <div class="container">

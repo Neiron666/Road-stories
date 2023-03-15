@@ -1,4 +1,4 @@
-import { generateUniqId } from "../utils/algomethods.js";
+import { generateUniqId } from "../../utils/algomethods.js";
 // Story שם
 // אצלי זה סיפור מסויים לקניה
 class Picture {
